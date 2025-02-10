@@ -10,12 +10,15 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ProductsService } from 'src/services/products/products.service';
 
 @Controller('products')
 export class ProductsController {
+  constructor(private productsService: ProductsService) {}
+
   @Get()
-  getProducts(): string {
-    return `All products`;
+  getProducts() {
+    return this.productsService.findAll();
   }
 
   @Get('filter')
@@ -31,27 +34,22 @@ export class ProductsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.ACCEPTED)
-  getProduct(@Param('id') id: number): string {
-    return `Product ${id}`;
+  getProduct(@Param('id') id: string) {
+    return this.productsService.findOne(+id);
   }
 
   @Post()
-  create(@Body() payload: object) {
-    return { message: 'Acción de crear', payload };
+  create(@Body() payload: any) {
+    return this.productsService.create(payload);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: object) {
-    return {
-      message: `Acción de actualizar ${id}`,
-      payload,
-    };
+  update(@Param('id') id: string, @Body() payload: any) {
+    return this.productsService.update(+id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      message: `Acción de eliminar ${id}`,
-    };
+  delete(@Param('id') id: string) {
+    return this.productsService.delete(+id);
   }
 }
