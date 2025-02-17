@@ -11,7 +11,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ProductsService } from 'src/services/products/products.service';
+import { ProductsService } from '../services/products.service';
 import { ParseIntCustomPipe } from 'src/common/parse-int/parse-int.pipe';
 import {
   CreateProductDTO,
