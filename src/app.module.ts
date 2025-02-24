@@ -3,12 +3,25 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
-
-const API_KEY = '12345634';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { lastValueFrom } from 'rxjs';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule],
+  imports: [UsersModule, ProductsModule, HttpModule, DatabaseModule],
   controllers: [AppController],
-  providers: [AppService, { provide: 'API_KEY', useValue: API_KEY }],
+  providers: [
+    AppService,
+    {
+      provide: 'TODOS',
+      useFactory: async (http: HttpService) => {
+        const request = http.get('https://jsonplaceholder.typicode.com/todos');
+        const data = await lastValueFrom(request);
+
+        return data;
+      },
+      inject: [HttpService],
+    },
+  ],
 })
 export class AppModule {}
