@@ -7,6 +7,7 @@ import { HttpModule, HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { environments } from './environments';
 
 @Module({
   imports: [
@@ -15,7 +16,9 @@ import { ConfigModule } from '@nestjs/config';
     HttpModule,
     DatabaseModule,
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath:
+        environments[process.env.NODE_ENV as keyof typeof environments] ||
+        '.env',
       isGlobal: true,
     }),
   ],
