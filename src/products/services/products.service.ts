@@ -71,10 +71,13 @@ export class ProductsService {
 
   update(id: number, payload: UpdateProductDTO) {
     const product = this.findOne(id);
+
     if (!product) {
       return new NotFoundException(`Product #${id} not found`);
     }
+
     const index = this.products.findIndex((item) => item.id === id);
+
     this.products[index] = {
       ...product,
       ...payload,
