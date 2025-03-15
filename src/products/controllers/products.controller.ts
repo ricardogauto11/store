@@ -17,7 +17,9 @@ import {
   CreateProductDTO,
   UpdateProductDTO,
 } from 'src/products/DTOs/products.dtos';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
