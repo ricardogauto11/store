@@ -2,12 +2,10 @@ import {
   IsString,
   IsNumber,
   IsUrl,
-  IsEmail,
-  IsDate,
   IsNotEmpty,
   IsPositive,
 } from 'class-validator';
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 
 export class CreateProductDTO {
   @IsString()
